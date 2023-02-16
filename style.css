@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Elsie+Swash+Caps&display=swap");
+
+:root {
+  --font-fancy: "Elsie Swash Caps", cursive;
+  --font-fancy-weight: 400;
+  --font-regular: "Helvetica", sans-serif;
+  --spacing: 2rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ---------------------------------- */
+
+:root {
+  background: var(--color-brown);
+  color: rgb(0, 0, 0);
+  font-family: var(--font-regular);
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+
+}
+
+.mainHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  padding: var(--spacing);
+}
+
+.mainTitle {
+  font-family: var(--font-fancy);
+  font-weight: var(--font-fancy-weight);
+  color: var(--color-yellow);
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ---------------------------------- */
+
+.sliderNav {
+  position: fixed;
+  bottom: var(--spacing);
+  left: var(--spacing);
+  z-index: 10;
+  font-size: 2rem;
+}
+
+.sliderNavButton {
+  appearance: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border: none;
+  text-transform: uppercase;
+}
+
+.slideImages {
+  width: 100vw;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.slideImage {
+  grid-area: 1 / 1;
+  display: block;
+  max-width: 100%;
+}
+
+
+.slider {
+  display: grid;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slide,
+.sliderSlides {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+* {
+  grid-area: 1 / 1;
+}
+
+
+/* ---------------------------------- */
+
+.slideImage {
+  will-change: transform;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3);
+
+  --clip-path-duration: var(--full-state, 1.4s) var(--slides-state, 2.5s);
+
+  transition: transform 2s cubic-bezier(0.7, 0, 0.3, 1),
+    clip-path var(--clip-path-duration) cubic-bezier(0.6, 0, 0.4, 1);
+  transition-delay: calc((var(--delay) + var(--delay-offset)) * 0.1s);
+  --delay: 0;
+  --delay-offset: 0;
+
+  --rotation: rotate(-25deg);
+  --imageOffset: translateX(-50%) scale(0.8);
+  --slideOffset: translateX(calc(var(--offset) * 110vw));
+
+  --transform: var(--slideOffset) var(--imageOffset) var(--rotation);
+
+  transform: var(--transform);
+}
+
+main {
+  --delay: 1;
+  --rotation:
+    /**/
+  ;
+  --imageOffset:
+    /**/
+  ;
+  z-index: 2;
+}
+
+.-main+.slideImage {
+  --imageOffset: translateX(50%) scale(0.8);
+  --rotation: rotate(25deg);
+  --delay: 2;
+}
+
+[data-state="full"] .slideImage {
+  --rotation:
+    /**/
+  ;
+  --imageOffset:
+    /**/
+  ;
+  --delay: 0;
+}
+
+
+.slide[data-current] .slideImage {
+  --delay-offset: 3;
+}
+
+.slideImage.-main {
+  transform: var(--transform) scale(var(--full-state, 4) var(--slides-state, 1));
+  clip-path: var(--full-state, polygon(0% 25%, 100% 25%, 100% 75%, 0% 75%)) var(--slides-state, polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%));
+}
+
+
+.slide .slideImage.-main {
+  transform: none;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+
+.slider [data-state="full"] {
+  --slides-state: ;
+}
+
+.slider [data-state="slides"] {
+  --full-state:
+    /**/
+  ;
+}
+
+
+/* ---------------------------------- */
+
+.slideTitle {
+  font-family: var(--font-fancy);
+  font-weight: var(--font-fancy-weight);
+  color: var(--color-yellow);
+  font-size: 10vw;
+  text-align: center;
+  z-index: 20;
+  opacity: 0;
+}
+
+.slideTitle [data-current] * {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card {
+  cursor: pointer;
+  width: 340px;
+  height: 480px;
+}
+
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  transition: transform .7s linear;
+}
+
+.front img {
+  height: 100%;
+}
+
+.front {
+  transform: perspective(600px) rotateY(0deg);
+  width: 500px;
+}
+
+.back {
+  transform: perspective(600px) rotateY(120deg);
+  background: #DB7592;
+  width: 500px;
+  border: 3px red dashed;
+}
+
+.back-content {
+  width: 100%;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-style: oblique;
+  font-family: 'Georgia';
+}
+
+span {
+  display: block;
+  font-size: 20px;
+    font-family: 'Georgia';
+}
+
+.fas {
+  display: block;
+  margin: 20px 0;
+  color:  rgb(220, 0, 0);
+  font-size: 25px;
+}
+
+.fas:hover {
+  -webkit-transform: scale(2.2);
+  -ms-transform: scale(2.2);
+  transform: scale(2.2);
+}
+
+.card:hover>.front {
+  transform: perspective(600px) rotateY(-180deg);
+}
+
+.card:hover>.back {
+  transform: perspective(600px) rotateY(0deg);
+}
